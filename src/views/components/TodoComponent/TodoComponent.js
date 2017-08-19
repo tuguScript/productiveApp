@@ -85,7 +85,11 @@ export default class TodoComponent extends Component {
       const tx = db.transaction("todoList", "readwrite");
       tx.objectStore("todoList").get(date).then(task => {
         let taskBucket = task;
-        let taskObj = { date: date, task: taskBucket.task, done: !taskBucket.done };
+        let taskObj = {
+          date: date,
+          task: taskBucket.task,
+          done: !taskBucket.done
+        };
         tx.objectStore("todoList").put(taskObj).then(() => {
           test();
         });
@@ -100,6 +104,9 @@ export default class TodoComponent extends Component {
           <div key={i}>
             <del>
               <ListItem
+                onClick={() => {
+                  this.taskDone(data.date);
+                }}
                 style={{ color: "grey" }}
                 leftAvatar={
                   <Avatar
@@ -122,6 +129,9 @@ export default class TodoComponent extends Component {
         return (
           <div key={i}>
             <ListItem
+              onClick={() => {
+                this.taskDone(data.date);
+              }}
               leftAvatar={
                 <Avatar
                   icon={<Done />}

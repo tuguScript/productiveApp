@@ -17,6 +17,8 @@ const getFormatTypes = [
   { type: "social", time: 900 }
 ];
 
+const circumference = 916
+
 export default class PomodoroTimer extends Component {
   constructor() {
     super();
@@ -27,14 +29,14 @@ export default class PomodoroTimer extends Component {
       type: 0,
       title: "",
       interval: 0,
-      circumference: 1230,
+      circumference: circumference,
       anhniiTime: 1500
     };
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.time != null) {
       let millisecond = nextProps.time * 60;
-      this.setState({ time: millisecond, anhniiTime: millisecond, play: false, circumference: 1230 });
+      this.setState({ time: millisecond, anhniiTime: millisecond, play: false, circumference: circumference });
     }
   }
   updateCircle() {}
@@ -45,7 +47,7 @@ export default class PomodoroTimer extends Component {
     }
     if (this.state.play === true) {
       let newState = this.state.time - 1;
-      let too = 1230 / this.state.anhniiTime;
+      let too = circumference / this.state.anhniiTime;
       this.setState({
         time: newState,
         circumference: this.state.circumference - too
@@ -60,28 +62,28 @@ export default class PomodoroTimer extends Component {
           type: 1,
           time: getFormatTypes[1].time,
           interval: ++this.state.interval,
-          circumference: 1230
+          circumference: circumference
         });
         break;
       case 1:
         this.setState({
           type: 0,
           time: getFormatTypes[0].time,
-          circumference: 1230
+          circumference: circumference
         });
         break;
       case 2:
         this.setState({
           type: 0,
           time: getFormatTypes[0].time,
-          circumference: 1230
+          circumference: circumference
         });
         break;
       default:
         this.setState({
           type: 0,
           time: getFormatTypes[0].time,
-          circumference: 1230
+          circumference: circumference
         });
         break;
     }
@@ -111,27 +113,27 @@ export default class PomodoroTimer extends Component {
       <div style={styles.root}>
         <div style={{ margin: "0 auto" }}>
           <svg
-            width="400"
-            height="400"
+            width="300"
+            height="300"
             className="progress"
             // style={{ transform: "rotate(-90deg)" }}
           >
             <circle
-              cx="200"
-              cy="200"
-              r="192"
+              cx="150"
+              cy="150"
+              r="146"
               fill="none"
               stroke="#e6e6e6"
               strokeWidth="8"
             />
             <circle
-              cx="200"
-              cy="200"
-              r="192"
+              cx="150"
+              cy="150"
+              r="146"
               fill="none"
               stroke="#f77a52"
               strokeWidth="8"
-              strokeDasharray="1230"
+              strokeDasharray={circumference}
               strokeDashoffset={this.state.circumference}
             />
             <text x="150" y="197" textAnchor="middle" fill="black" style={{textSize: '20px'}}>

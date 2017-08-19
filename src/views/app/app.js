@@ -18,7 +18,7 @@ export default class App extends Component {
     };
   }
   componentWillMount() {
-    browserHistory.push("/todo");
+    browserHistory.push("/pomodoro");
   }
   openDrawer() {
     this.setState({
