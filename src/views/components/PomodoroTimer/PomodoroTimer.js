@@ -134,7 +134,7 @@ export default class PomodoroTimer extends Component {
               strokeDasharray="1230"
               strokeDashoffset={this.state.circumference}
             />
-            <text x="150" y="197" text-anchor="middle" fill="black" style={{textSize: '20px'}}>
+            <text x="150" y="197" textAnchor="middle" fill="black" style={{textSize: '20px'}}>
               <tspan>
                 <a style={{fontSize: '3em'}}>{this.format(this.state.time)}</a>
               </tspan>

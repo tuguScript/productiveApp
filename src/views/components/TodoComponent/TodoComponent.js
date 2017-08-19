@@ -4,7 +4,10 @@ import RaisedButton from "material-ui/RaisedButton";
 import { List, ListItem } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import ClearFolder from "material-ui/svg-icons/content/clear";
+import Done from "material-ui/svg-icons/action/done";
+import Undo from "material-ui/svg-icons/content/undo";
 import idb from "idb";
+import Divider from "material-ui/Divider";
 
 const dbPromise = idb.open("IndexedDB", 1, upgradeDB => {
   upgradeDB.createObjectStore("todoList", { keyPath: "date" });
@@ -70,20 +73,76 @@ export default class TodoComponent extends Component {
       })
       .then(test());
   }
+  taskDone(date) {
+    let test = async () => {
+      let retreivedData = await this.retreiveData();
+      this.setState({
+        task: retreivedData,
+        taskInputError: false
+      });
+    };
+    dbPromise.then(db => {
+      const tx = db.transaction("todoList", "readwrite");
+      tx.objectStore("todoList").get(date).then(task => {
+        let taskBucket = task;
+        let taskObj = { date: date, task: taskBucket.task, done: !taskBucket.done };
+        tx.objectStore("todoList").put(taskObj).then(() => {
+          test();
+        });
+      });
+      return tx.complete;
+    });
+  }
   render() {
     let task = this.state.task.map((data, i) => {
-      return (
-        <ListItem
-          key={i}
-          leftAvatar={<Avatar icon={<ClearFolder />} />}
-          rightIcon={<ClearFolder onClick={() => this.deleteTask(data.date)} />}
-          primaryText={data.task}
-        />
-      );
+      if (data.done) {
+        return (
+          <div key={i}>
+            <del>
+              <ListItem
+                style={{ color: "grey" }}
+                leftAvatar={
+                  <Avatar
+                    icon={<Undo />}
+                    onClick={() => {
+                      this.taskDone(data.date);
+                    }}
+                  />
+                }
+                rightIcon={
+                  <ClearFolder onClick={() => this.deleteTask(data.date)} />
+                }
+                primaryText={data.task}
+              />
+            </del>
+            <Divider inset={true} />
+          </div>
+        );
+      } else {
+        return (
+          <div key={i}>
+            <ListItem
+              leftAvatar={
+                <Avatar
+                  icon={<Done />}
+                  onClick={() => {
+                    this.taskDone(data.date);
+                  }}
+                />
+              }
+              rightIcon={
+                <ClearFolder onClick={() => this.deleteTask(data.date)} />
+              }
+              primaryText={data.task}
+            />
+            <Divider inset={true} />
+          </div>
+        );
+      }
     });
     return (
       <div style={{ textAlign: "center" }}>
-        <div style={{ padding: "0px 10px" }}>
+        <div style={{ padding: "10px 10px 0px 10px" }}>
           <TextField
             errorText={this.state.taskInputError ? "Insert a new task." : null}
             hintText="Task"

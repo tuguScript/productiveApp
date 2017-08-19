@@ -1,4 +1,13 @@
 {
+  "hosting": {
+    "public": ".",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
   "projects": {
     "default": "newme-7d6ec"
   }

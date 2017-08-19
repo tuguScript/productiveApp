@@ -4,6 +4,11 @@ import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import { browserHistory } from "react-router";
 
+const title = {
+  "/pomodoro": "Pomodoro",
+  "/todo": "Todo"
+};
+
 export default class App extends Component {
   constructor() {
     super();
@@ -64,10 +69,10 @@ export default class App extends Component {
           </MenuItem>
         </Drawer>
         <AppBar
-          title="Title"
+          title={title[window.location.pathname]}
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={() => this.openDrawer()}
-          style={{backgroundColor: '#7ce0c3'}}
+          style={{ backgroundColor: "#7ce0c3" }}
         />
         {this.props.children}
       </div>
