@@ -53,19 +53,11 @@ export default class App extends Component {
           </MenuItem>
           <MenuItem
             onTouchTap={() => {
-              browserHistory.push("/routine");
+              browserHistory.push("/whatispomodoro");
               this.setState({ open: false });
             }}
           >
-            Morning Routine
-          </MenuItem>
-          <MenuItem
-            onTouchTap={() => {
-              browserHistory.push("/lifehacks");
-              this.setState({ open: false });
-            }}
-          >
-            Lifehacks
+            What is Pomodoro?
           </MenuItem>
         </Drawer>
         <AppBar

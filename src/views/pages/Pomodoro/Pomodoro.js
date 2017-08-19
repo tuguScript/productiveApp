@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PomodoroTimer from "../../components/PomodoroTimer/PomodoroTimer";
-import ReactDOM from "react-dom";
 import TextField from "material-ui/TextField";
 
 export default class Pomodoro extends Component {
