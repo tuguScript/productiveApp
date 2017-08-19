@@ -126,7 +126,7 @@ export default class PomodoroTimer extends Component {
   render() {
     return (
       <div style={styles.root}>
-        <h2 style={styles.headline}>Set the mood(test title)</h2>
+        <h2 style={styles.headline}>{this.props.title || null}</h2>
         {this.state.play
           ? <RaisedButton
               label="Pause"

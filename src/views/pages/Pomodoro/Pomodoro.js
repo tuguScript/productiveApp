@@ -32,7 +32,7 @@ export default class Pomodoro extends Component {
           />
         </div>
         <PomodoroTimer
-          title="Work"
+          title={this.props.location.state ? this.props.location.state.task : null}
           time={this.state.workTime}
           restTime={this.state.restTime}
         />

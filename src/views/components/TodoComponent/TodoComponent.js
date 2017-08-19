@@ -8,6 +8,7 @@ import Done from "material-ui/svg-icons/action/done";
 import Undo from "material-ui/svg-icons/content/undo";
 import idb from "idb";
 import Divider from "material-ui/Divider";
+import { browserHistory } from "react-router";
 
 const dbPromise = idb.open("IndexedDB", 1, upgradeDB => {
   upgradeDB.createObjectStore("todoList", { keyPath: "date" });
@@ -27,7 +28,9 @@ export default class TodoComponent extends Component {
         return store.getAll();
       })
       .then(function(val) {
-        return val;
+        return val.sort((a, b) => {
+          return a.done - b.done;
+        });
       });
   }
   async componentDidMount() {
@@ -97,6 +100,12 @@ export default class TodoComponent extends Component {
       return tx.complete;
     });
   }
+  openPomodoro(task) {
+    browserHistory.push({
+      pathname: "/pomodoro",
+      state: { task }
+    });
+  }
   render() {
     let task = this.state.task.map((data, i) => {
       if (data.done) {
@@ -104,22 +113,28 @@ export default class TodoComponent extends Component {
           <div key={i}>
             <del>
               <ListItem
-                onClick={() => {
-                  this.taskDone(data.date);
-                }}
                 style={{ color: "grey" }}
                 leftAvatar={
                   <Avatar
                     icon={<Undo />}
-                    onClick={() => {
+                    onTouchTap={() => {
                       this.taskDone(data.date);
                     }}
                   />
                 }
                 rightIcon={
-                  <ClearFolder onClick={() => this.deleteTask(data.date)} />
+                  <ClearFolder onTouchTap={() => this.deleteTask(data.date)} />
                 }
-                primaryText={data.task}
+                primaryText={
+                  <div
+                    style={{ width: "100%", height: "100%", fontSize: "24px" }}
+                    onTouchTap={() => {
+                      this.openPomodoro(data.task);
+                    }}
+                  >
+                    {data.task}
+                  </div>
+                }
               />
             </del>
             <Divider inset={true} />
@@ -129,21 +144,27 @@ export default class TodoComponent extends Component {
         return (
           <div key={i}>
             <ListItem
-              onClick={() => {
-                this.taskDone(data.date);
-              }}
               leftAvatar={
                 <Avatar
                   icon={<Done />}
-                  onClick={() => {
+                  onTouchTap={() => {
                     this.taskDone(data.date);
                   }}
                 />
               }
               rightIcon={
-                <ClearFolder onClick={() => this.deleteTask(data.date)} />
+                <ClearFolder onTouchTap={() => this.deleteTask(data.date)} />
               }
-              primaryText={data.task}
+              primaryText={
+                <div
+                  style={{ width: "100%", height: "100%", fontSize: "24px" }}
+                  onTouchTap={() => {
+                    this.openPomodoro(data.task);
+                  }}
+                >
+                  {data.task}
+                </div>
+              }
             />
             <Divider inset={true} />
           </div>
