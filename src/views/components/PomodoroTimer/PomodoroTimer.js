@@ -113,7 +113,7 @@ export default class PomodoroTimer extends Component {
           <svg
             width="400"
             height="400"
-            class="progress"
+            className="progress"
             // style={{ transform: "rotate(-90deg)" }}
           >
             <circle

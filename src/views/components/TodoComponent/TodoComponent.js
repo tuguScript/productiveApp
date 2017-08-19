@@ -13,7 +13,7 @@ const dbPromise = idb.open("IndexedDB", 1, upgradeDB => {
 export default class TodoComponent extends Component {
   constructor() {
     super();
-    this.state = { task: [] };
+    this.state = { task: [], taskInput: "", taskInputError: false };
     this.addTask = this.addTask.bind(this);
   }
   retreiveData() {
@@ -33,20 +33,29 @@ export default class TodoComponent extends Component {
   }
   addTask() {
     let taskInput = this.state.taskInput;
-    let task = { date: new Date().getTime(), task: taskInput, done: false };
-    let test = async () => {
-      let retreivedData = await this.retreiveData();
-      this.setState({ task: retreivedData });
-    };
-    dbPromise
-      .then(db => {
-        const tx = db.transaction("todoList", "readwrite");
-        tx.objectStore("todoList").put(task);
-        return tx.complete;
-      })
-      .then(function() {
-        test();
-      });
+    if (taskInput === "") {
+      this.setState({ taskInputError: true });
+      return;
+    } else {
+      let task = { date: new Date().getTime(), task: taskInput, done: false };
+      let test = async () => {
+        let retreivedData = await this.retreiveData();
+        this.setState({
+          task: retreivedData,
+          taskInput: "",
+          taskInputError: false
+        });
+      };
+      dbPromise
+        .then(db => {
+          const tx = db.transaction("todoList", "readwrite");
+          tx.objectStore("todoList").put(task);
+          return tx.complete;
+        })
+        .then(function() {
+          test();
+        });
+    }
   }
   deleteTask(date) {
     let test = async () => {
@@ -76,6 +85,7 @@ export default class TodoComponent extends Component {
       <div style={{ textAlign: "center" }}>
         <div style={{ padding: "0px 10px" }}>
           <TextField
+            errorText={this.state.taskInputError ? "Insert a new task." : null}
             hintText="Task"
             fullWidth={true}
             onChange={(e, newvalue) => {
@@ -83,6 +93,7 @@ export default class TodoComponent extends Component {
                 taskInput: newvalue
               });
             }}
+            value={this.state.taskInput}
           />
         </div>
         <br />
