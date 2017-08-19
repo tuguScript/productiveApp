@@ -48,13 +48,26 @@ export default class TodoComponent extends Component {
         test();
       });
   }
+  deleteTask(date) {
+    let test = async () => {
+      let retreivedData = await this.retreiveData();
+      this.setState({ task: retreivedData });
+    };
+    return dbPromise
+      .then(db => {
+        const tx = db.transaction("todoList", "readwrite");
+        tx.objectStore("todoList").delete(date);
+        return tx.complete;
+      })
+      .then(test());
+  }
   render() {
     let task = this.state.task.map((data, i) => {
       return (
         <ListItem
           key={i}
           leftAvatar={<Avatar icon={<ClearFolder />} />}
-          rightIcon={<ClearFolder />}
+          rightIcon={<ClearFolder onClick={() => this.deleteTask(data.date)} />}
           primaryText={data.task}
         />
       );
