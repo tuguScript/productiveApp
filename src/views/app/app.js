@@ -72,9 +72,11 @@ export default class App extends Component {
           title={title[window.location.pathname]}
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={() => this.openDrawer()}
-          style={{ backgroundColor: "#7ce0c3" }}
+          style={{ backgroundColor: "#7ce0c3", position: 'fixed' }}
         />
+        <div style={{paddingTop: '50px', maxWidth: '500px', margin: '0 auto'}}>
         {this.props.children}
+        </div>
       </div>
     );
   }

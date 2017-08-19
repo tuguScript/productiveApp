@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import CircularProgress from "material-ui/CircularProgress";
+import RaisedButton from "material-ui/RaisedButton";
+import PlayArrow from "material-ui/svg-icons/av/play-arrow";
+import Pause from "material-ui/svg-icons/av/pause";
 
 const styles = {
   root: {
@@ -8,6 +11,14 @@ const styles = {
     maxWidth: "500px",
     // justifyContent: 'center',
     flexDirection: "column"
+  },
+  button: {
+    margin: 12
+  },
+  headline: {
+    fontSize: 24,
+    marginBottom: 12,
+    fontWeight: 400
   }
 };
 
@@ -17,7 +28,7 @@ const getFormatTypes = [
   { type: "social", time: 900 }
 ];
 
-const circumference = 916
+const circumference = 916;
 
 export default class PomodoroTimer extends Component {
   constructor() {
@@ -36,7 +47,12 @@ export default class PomodoroTimer extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.time != null) {
       let millisecond = nextProps.time * 60;
-      this.setState({ time: millisecond, anhniiTime: millisecond, play: false, circumference: circumference });
+      this.setState({
+        time: millisecond,
+        anhniiTime: millisecond,
+        play: false,
+        circumference: circumference
+      });
     }
   }
   updateCircle() {}
@@ -111,7 +127,24 @@ export default class PomodoroTimer extends Component {
   render() {
     return (
       <div style={styles.root}>
-        <div style={{ margin: "0 auto" }}>
+        <h2 style={styles.headline}>Set the mood(test title)</h2>
+        {this.state.play
+          ? <RaisedButton
+              label="Pause"
+              onClick={() => this.setState({ play: false })}
+              style={styles.button}
+              secondary={true}
+              icon={<Pause />}
+            />
+          : <RaisedButton
+              label="Start"
+              onClick={() => this.play()}
+              primary={true}
+              style={styles.button}
+              icon={<PlayArrow />}
+            />}
+        <br />
+        <div style={{ margin: "0 auto", width: "100%" }}>
           <svg
             width="300"
             height="300"
@@ -136,24 +169,22 @@ export default class PomodoroTimer extends Component {
               strokeDasharray={circumference}
               strokeDashoffset={this.state.circumference}
             />
-            <text x="150" y="197" textAnchor="middle" fill="black" style={{textSize: '20px'}}>
+            <text
+              x="150"
+              y="158"
+              textAnchor="middle"
+              fill="black"
+              style={{ textSize: "20px" }}
+            >
               <tspan>
-                <a style={{fontSize: '3em'}}>{this.format(this.state.time)}</a>
+                <a style={{ fontSize: "3em"}}>
+                  {this.format(this.state.time)}
+                </a>
               </tspan>
             </text>
           </svg>
 
-          {this.state.play
-            ? <button
-                type="button"
-                onClick={() => this.setState({ play: false })}
-              >
-                Pause
-              </button>
-            : <button type="button" onClick={() => this.play()}>
-                Start
-              </button>}
-          <h2 style={{ textAlign: "center" }}>
+          <h2 style={{ textAlign: "center", marginTop: '25px' }}>
             Today: {this.state.interval}/10
           </h2>
         </div>
