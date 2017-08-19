@@ -73,12 +73,21 @@ export default class PomodoroTimer extends Component {
     clearInterval(this.interval);
     switch (this.state.type) {
       case 0:
-        this.setState({
-          type: 1,
-          time: getFormatTypes[1].time,
-          interval: ++this.state.interval,
-          circumference: circumference
-        });
+        if (this.props.restTime) {
+          this.setState({
+            type: 1,
+            time: this.props.restTime * 60,
+            interval: ++this.state.interval,
+            circumference: circumference
+          });
+        } else {
+          this.setState({
+            type: 1,
+            time: getFormatTypes[1].time,
+            interval: ++this.state.interval,
+            circumference: circumference
+          });
+        }
         break;
       case 1:
         this.setState({
@@ -126,7 +135,9 @@ export default class PomodoroTimer extends Component {
   render() {
     return (
       <div style={styles.root}>
-        <h2 style={styles.headline}>{this.props.title || null}</h2>
+        <h2 style={styles.headline}>
+          {this.props.title || null}
+        </h2>
         {this.state.play
           ? <RaisedButton
               label="Pause"
@@ -176,14 +187,14 @@ export default class PomodoroTimer extends Component {
               style={{ textSize: "20px" }}
             >
               <tspan>
-                <a style={{ fontSize: "3em"}}>
+                <a style={{ fontSize: "3em" }}>
                   {this.format(this.state.time)}
                 </a>
               </tspan>
             </text>
           </svg>
 
-          <h2 style={{ textAlign: "center", marginTop: '25px' }}>
+          <h2 style={{ textAlign: "center", marginTop: "25px" }}>
             Today: {this.state.interval}/10
           </h2>
         </div>
