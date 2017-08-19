@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import TodoComponent from "../../components/TodoComponent/TodoComponent";
 
 export default class Todo extends Component {
   render() {
     return (
       <div>
-        <h1>Todo</h1>
+        <TodoComponent />
       </div>
     );
   }
