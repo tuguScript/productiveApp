@@ -22,7 +22,7 @@ const styles = {
 };
 
 const getFormatTypes = [
-  { type: "code", time: 1500 },
+  { type: "code", time: 300 },
   { type: "rest", time: 300 },
   { type: "social", time: 900 }
 ];
@@ -40,7 +40,8 @@ export default class PomodoroTimer extends Component {
       title: "",
       interval: 0,
       circumference: circumference,
-      anhniiTime: 1500
+      anhniiTime: 1500,
+      status: "work"
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -71,43 +72,43 @@ export default class PomodoroTimer extends Component {
   }
   reset(resetFor = this.state.time) {
     clearInterval(this.interval);
-    switch (this.state.type) {
-      case 0:
-        if (this.props.restTime) {
+    switch (this.state.status) {
+      case "work":
+        if (this.state.interval === 4 || this.state.interval === 8) {
           this.setState({
-            type: 1,
-            time: this.props.restTime * 60,
+            time: 900,
             interval: ++this.state.interval,
-            circumference: circumference
+            circumference: circumference,
+            anhniiTime: 900,
+            status: "rest"
           });
         } else {
           this.setState({
-            type: 1,
-            time: getFormatTypes[1].time,
+            time: this.props.restTime * 60,
             interval: ++this.state.interval,
-            circumference: circumference
+            circumference: circumference,
+            anhniiTime: this.props.restTime * 60,
+            status: "rest"
           });
         }
         break;
-      case 1:
+      case "rest":
         this.setState({
-          type: 0,
-          time: getFormatTypes[0].time,
-          circumference: circumference
+          time: this.props.time * 60,
+          interval: this.state.interval,
+          circumference: circumference,
+          anhniiTime: this.props.time * 60,
+          status: "work"
         });
         break;
-      case 2:
-        this.setState({
-          type: 0,
-          time: getFormatTypes[0].time,
-          circumference: circumference
-        });
-        break;
+
       default:
         this.setState({
-          type: 0,
-          time: getFormatTypes[0].time,
-          circumference: circumference
+          type: 1,
+          time: this.props.restTime * 60,
+          interval: ++this.state.interval,
+          circumference: circumference,
+          anhniiTime: this.props.restTime * 60
         });
         break;
     }
@@ -124,6 +125,9 @@ export default class PomodoroTimer extends Component {
     return timeFormated;
   }
   play() {
+    if (this.state.interval >= 10) {
+      this.setState({ interval: 0 });
+    }
     if (true === this.state.play) return;
 
     this.restartInterval();
@@ -190,6 +194,9 @@ export default class PomodoroTimer extends Component {
                 <a style={{ fontSize: "3em" }}>
                   {this.format(this.state.time)}
                 </a>
+                <p>
+                  {this.state.status}
+                </p>
               </tspan>
             </text>
           </svg>
