@@ -36,7 +36,6 @@ ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <Route path="pomodoro" component={Pomodoro} />
         <Route path="todo" component={Todo} />
         <Route path="whatispomodoro" component={Routine} />
       </Route>

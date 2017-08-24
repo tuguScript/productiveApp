@@ -15,7 +15,14 @@ export default class Pomodoro extends Component {
   }
   render() {
     return (
-      <div style={{ maxWidth: "400px", margin: "0 auto", textAlign: "center" }}>
+      <div
+        style={{
+          maxWidth: "400px",
+          margin: "0 auto",
+          textAlign: "center",
+          display: this.props.hide ? "none" : "block"
+        }}
+      >
         <br />
         <div style={{ display: "flex" }}>
           <TextField
@@ -32,7 +39,7 @@ export default class Pomodoro extends Component {
           />
         </div>
         <PomodoroTimer
-          title={this.props.location.state ? this.props.location.state.task : null}
+          title={this.props.title}
           time={this.state.workTime}
           restTime={this.state.restTime}
         />

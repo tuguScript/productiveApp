@@ -3,6 +3,7 @@ import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import { browserHistory } from "react-router";
+import Pomodoro from "../pages/Pomodoro/Pomodoro";
 
 const title = {
   "/pomodoro": "Pomodoro",
@@ -16,9 +17,6 @@ export default class App extends Component {
       open: null,
       docked: false
     };
-  }
-  componentWillMount() {
-    browserHistory.push("/pomodoro");
   }
   openDrawer() {
     this.setState({
@@ -37,7 +35,7 @@ export default class App extends Component {
         >
           <MenuItem
             onTouchTap={() => {
-              browserHistory.push("/pomodoro");
+              browserHistory.push("/");
               this.setState({ open: false });
             }}
           >
@@ -64,10 +62,18 @@ export default class App extends Component {
           title={title[window.location.pathname]}
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={() => this.openDrawer()}
-          style={{ backgroundColor: "#7ce0c3", position: 'fixed' }}
+          style={{ backgroundColor: "#7ce0c3", position: "fixed" }}
         />
-        <div style={{paddingTop: '50px', maxWidth: '500px', margin: '0 auto'}}>
-        {this.props.children}
+        <div
+          style={{ paddingTop: "50px", maxWidth: "500px", margin: "0 auto" }}
+        >
+          <Pomodoro
+            hide={this.props.location.pathname === "/" ? false : true}
+            title={
+              this.props.location.state ? this.props.location.state.task : null
+            }
+          />
+          {this.props.children}
         </div>
       </div>
     );

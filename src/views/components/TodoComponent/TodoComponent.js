@@ -102,7 +102,7 @@ export default class TodoComponent extends Component {
   }
   openPomodoro(task) {
     browserHistory.push({
-      pathname: "/pomodoro",
+      pathname: "/",
       state: { task }
     });
   }
