@@ -38,6 +38,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <Route path="todo" component={Todo} />
         <Route path="whatispomodoro" component={Routine} />
+        <Route path="*" onEnter={() => {browserHistory.push('/')}} />
       </Route>
     </Router>
   </MuiThemeProvider>,

@@ -1,0 +1,33 @@
+[debug] [2017-08-24T05:59:21.069Z] ----------------------------------------------------------------------
+[debug] [2017-08-24T05:59:21.076Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2017-08-24T05:59:21.076Z] CLI Version:   3.9.2
+[debug] [2017-08-24T05:59:21.076Z] Platform:      darwin
+[debug] [2017-08-24T05:59:21.076Z] Node Version:  v6.10.2
+[debug] [2017-08-24T05:59:21.077Z] Time:          Wed Aug 23 2017 22:59:21 GMT-0700 (PDT)
+[debug] [2017-08-24T05:59:21.077Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-08-24T05:59:21.090Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-08-24T05:59:21.091Z] > authorizing via signed-in user
+[debug] [2017-08-24T05:59:21.093Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-08-24T05:59:21.093Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/aWOfq_WWw36FxrgDVY4UWbhtqmkGQDS4djk5B8QINCE',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Aug 23 2017 22:59:21 GMT-0700 (PDT)
+[debug] [2017-08-24T05:59:21.769Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-24T05:59:21.772Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/newme-7d6ec  
+ Wed Aug 23 2017 22:59:21 GMT-0700 (PDT)
+[debug] [2017-08-24T05:59:23.408Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-24T05:59:23.408Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/newme-7d6ec/tokens  
+ Wed Aug 23 2017 22:59:23 GMT-0700 (PDT)
+[debug] [2017-08-24T05:59:24.384Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'newme-7d6ec'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing build directory for upload...
+[debug] [2017-08-24T05:59:25.596Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/newme-7d6ec/uploads/-KsHoiTqbsRpakq5wvAx?fileCount=13&message=  
+ Wed Aug 23 2017 22:59:25 GMT-0700 (PDT)
+[debug] [2017-08-24T05:59:33.088Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-24T05:59:33.089Z] [hosting] .tgz uploaded successfully, waiting for extraction
